@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:PennyBudget.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:DataType="vm:AddCategoryViewModel"
+        x:Class="PennyBudget.Views.AddCategoryView"
+        Title="Add Category"
+        Width="500" SizeToContent="Height">
+        
+        <StackPanel Margin="16" Spacing="8">
+            <Grid ColumnDefinitions="150,*" RowDefinitions="*,*,*">
+                <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Name</Label>
+                <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Name" Text="{Binding Record.Name}" HorizontalAlignment="Stretch"/>
+            
+                <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Is Income</Label>
+                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Record.IsIncome}" HorizontalAlignment="Left"/>
+            
+                <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Color</Label>
+                <ColorPicker Grid.Row="2" Grid.Column="1" Color="{Binding SelectedColor}" HorizontalAlignment="Left"/>
+            </Grid>
+            <Grid ColumnDefinitions="*,*">
+                <Button Grid.Column="0" Content="Save"   Click="OnSave" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                <Button Grid.Column="1" Content="Cancel" Click="OnCancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+            </Grid>
+                    
+        </StackPanel>
+</Window>

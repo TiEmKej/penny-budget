@@ -1,9 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
+using PennyBudget.Data;
 using PennyBudget.ViewModels;
 using PennyBudget.Views;
 
@@ -18,6 +16,12 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        using (var db = new AppDbContext())
+        {
+            db.Database.EnsureCreated();
+            DbSeeder.Seed(db);
+        }
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow

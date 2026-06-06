@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:PennyBudget.ViewModels"
+        xmlns:models="clr-namespace:PennyBudget.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:DataType="vm:AddRecordViewModel"
+        x:Class="PennyBudget.Views.AddRecordView"
+        Title="Add Record"
+        Width="500" SizeToContent="Height">
+        
+        <StackPanel Margin="16" Spacing="8">
+                
+                <Grid ColumnDefinitions="150,*" RowDefinitions="*,*,*,*">
+                        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record description</Label>
+                        <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Description" Text="{Binding Record.Description}" HorizontalAlignment="Stretch"/>
+                        
+                        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record amount</Label>
+                        <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Record.Amount}" HorizontalAlignment="Stretch"/>
+                        
+                        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record date</Label>
+                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RecordDate}" HorizontalAlignment="Stretch"/>
+                        
+                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Name</Label>
+                        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Categories}"
+                                  SelectedItem="{Binding SelectedCategory}"
+                                  HorizontalAlignment="Stretch">
+                                <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:RecordCategory">
+                                                <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                        </ComboBox>
+                </Grid>
+                <Grid ColumnDefinitions="*,*">
+                        <Button Grid.Column="0" Content="Save"   Click="OnSave" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                        <Button Grid.Column="1" Content="Cancel" Click="OnCancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>        
+                </Grid>
+                
+                
+                
+        </StackPanel>
+</Window>

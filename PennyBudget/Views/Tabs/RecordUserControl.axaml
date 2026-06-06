@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:PennyBudget.ViewModels"
+             x:DataType="vm:RecordsWindowViewModel"
+             x:Class="PennyBudget.Views.Tabs.RecordUserControl">
+    <DockPanel>
+
+        <!-- Tab-specific button bar -->
+        <Border DockPanel.Dock="Bottom"
+                Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+                Padding="4">
+            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="2">
+                <Button Command="{Binding AddRecordCommand}" Content="Nowy wpis"/>
+                <Button Command="{Binding DeleteCommand}" Content="Usuń"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Content fills the rest -->
+        <DataGrid ItemsSource="{Binding Records}"
+                  SelectedItem="{Binding SelectedRecord}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data" Binding="{Binding Date, StringFormat=\{0:yyyy-MM-dd\}}" />
+                <DataGridTextColumn Header="Kategoria" Binding="{Binding Category.Name}" />
+                <DataGridTextColumn Header="Opis" Binding="{Binding Description}" />
+                <DataGridTextColumn Header="Kwota" Binding="{Binding Amount, StringFormat=\{0:N\}}" />
+                <DataGridTextColumn Header="Waluta" Binding="{Binding Currency}" />
+                <DataGridTextColumn Header="Kurs" Binding="{Binding CurrencyRate, StringFormat=\{0:N\}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
+</UserControl>

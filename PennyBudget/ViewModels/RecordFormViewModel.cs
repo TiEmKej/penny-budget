@@ -7,22 +7,21 @@ using PennyBudget.Models;
 
 namespace PennyBudget.ViewModels;
 
-public partial class AddRecordViewModel : ViewModelBase
+public partial class RecordFormViewModel : ViewModelBase
 {
     [ObservableProperty] private FinancialRecord _record = new();
     [ObservableProperty] private ObservableCollection<RecordCategory> _categories = [];
     [ObservableProperty] private RecordCategory? _selectedCategory;
-    [ObservableProperty] private bool _isExpense = true;
     [ObservableProperty] private DateTimeOffset? _recordDate = DateTimeOffset.Now;
 
-    partial void OnRecordDateChanged(DateTimeOffset? value)
-    {
-        if (value.HasValue)
-            Record.Date = value.Value.DateTime;
-    }
+    public string Title => Record.Id == 0 ? "Add Record" : "Edit Record";
 
-    public AddRecordViewModel()
+    public RecordFormViewModel() => LoadCategories();
+
+    public RecordFormViewModel(FinancialRecord record)
     {
+        Record = record;
+        RecordDate = new DateTimeOffset(record.Date);
         LoadCategories();
     }
 
@@ -30,13 +29,19 @@ public partial class AddRecordViewModel : ViewModelBase
     {
         using var db = new AppDbContext();
         Categories = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());
+        if (Record.CategoryId != 0)
+            SelectedCategory = Categories.FirstOrDefault(c => c.Id == Record.CategoryId);
+    }
+
+    partial void OnRecordDateChanged(DateTimeOffset? value)
+    {
+        if (value.HasValue)
+            Record.Date = value.Value.DateTime;
     }
 
     partial void OnSelectedCategoryChanged(RecordCategory? value)
     {
         if (value is not null)
-        {
             Record.CategoryId = value.Id;
-        }
     }
 }

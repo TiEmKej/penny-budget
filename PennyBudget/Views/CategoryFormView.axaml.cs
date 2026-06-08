@@ -3,9 +3,9 @@ using Avalonia.Interactivity;
 
 namespace PennyBudget.Views;
 
-public partial class AddRecordView : Window
+public partial class CategoryFormView : Window
 {
-    public AddRecordView()
+    public CategoryFormView()
     {
         InitializeComponent();
     }

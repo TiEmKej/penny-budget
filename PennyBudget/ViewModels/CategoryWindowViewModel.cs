@@ -12,13 +12,14 @@ using PennyBudget.Views;
 
 namespace PennyBudget.ViewModels;
 
-public partial class CategoryWindowViewModel: ViewModelBase
+public partial class CategoryWindowViewModel : ViewModelBase
 {
     [ObservableProperty]
     private ObservableCollection<RecordCategory> _records = [];
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+    [NotifyCanExecuteChangedFor(nameof(EditCategoryCommand))]
     private RecordCategory? _selectedRecord;
 
     public CategoryWindowViewModel() => Load();
@@ -26,8 +27,7 @@ public partial class CategoryWindowViewModel: ViewModelBase
     private void Load()
     {
         using var db = new AppDbContext();
-        Records = new ObservableCollection<RecordCategory>(
-            db.RecordCategory.ToList());
+        Records = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());
     }
 
     [RelayCommand]
@@ -36,25 +36,44 @@ public partial class CategoryWindowViewModel: ViewModelBase
         var mainWindow = (Application.Current?.ApplicationLifetime
             as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 
-        var dialog = new AddCategoryView { DataContext = new AddCategoryViewModel() };
+        var dialog = new CategoryFormView { DataContext = new CategoryFormViewModel() };
         var result = await dialog.ShowDialog<bool?>(mainWindow!);
 
         if (result == true)
         {
-            var vm = (AddCategoryViewModel)dialog.DataContext;
+            var vm = (CategoryFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
             await db.RecordCategory.AddAsync(vm.Record);
             await db.SaveChangesAsync();
+            Load();
         }
     }
 
-    [RelayCommand(CanExecute = nameof(CanDelete))]
+    [RelayCommand(CanExecute = nameof(CanEditOrDelete))]
+    private async Task EditCategory()
+    {
+        if (SelectedRecord is null) return;
+
+        var mainWindow = (Application.Current?.ApplicationLifetime
+            as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+
+        var dialog = new CategoryFormView { DataContext = new CategoryFormViewModel(SelectedRecord) };
+        var result = await dialog.ShowDialog<bool?>(mainWindow!);
+
+        if (result == true)
+        {
+            var vm = (CategoryFormViewModel)dialog.DataContext;
+            await using var db = new AppDbContext();
+            db.Entry(vm.Record).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            Load();
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanEditOrDelete))]
     private async Task Delete()
     {
-        if (SelectedRecord is null)
-        {
-            return;
-        }
+        if (SelectedRecord is null) return;
 
         await using var db = new AppDbContext();
         db.RecordCategory.Remove(SelectedRecord);
@@ -62,5 +81,5 @@ public partial class CategoryWindowViewModel: ViewModelBase
         Load();
     }
 
-    private bool CanDelete() => SelectedRecord is not null;
+    private bool CanEditOrDelete() => SelectedRecord is not null;
 }

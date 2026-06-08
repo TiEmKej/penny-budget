@@ -13,6 +13,7 @@
                 Padding="4">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="2">
                 <Button Command="{Binding AddCategoryCommand}" Content="Nowa kategoria"/>
+                <Button Command="{Binding EditCategoryCommand}" Content="Edytuj"/>
                 <Button Command="{Binding DeleteCommand}" Content="Usuń"/>
             </StackPanel>
         </Border>

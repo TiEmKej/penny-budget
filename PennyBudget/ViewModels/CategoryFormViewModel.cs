@@ -4,10 +4,20 @@ using PennyBudget.Models;
 
 namespace PennyBudget.ViewModels;
 
-public partial class AddCategoryViewModel : ViewModelBase
+public partial class CategoryFormViewModel : ViewModelBase
 {
     [ObservableProperty] private RecordCategory _record = new();
     [ObservableProperty] private Color _selectedColor = Colors.Black;
+
+    public string Title => Record.Id == 0 ? "Add Category" : "Edit Category";
+
+    public CategoryFormViewModel() { }
+
+    public CategoryFormViewModel(RecordCategory category)
+    {
+        Record = category;
+        SelectedColor = Color.Parse(category.ColorHex);
+    }
 
     partial void OnSelectedColorChanged(Color value)
     {

@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="using:PennyBudget.ViewModels"
+             xmlns:models="using:PennyBudget.Models"
+             xmlns:converters="using:PennyBudget.Converters"
              x:DataType="vm:RecordsWindowViewModel"
              x:Class="PennyBudget.Views.Tabs.RecordUserControl">
+    <UserControl.Resources>
+        <converters:IsIncomeToColorConverter x:Key="IsIncomeToColor"/>
+    </UserControl.Resources>
     <DockPanel>
 
         <!-- Tab-specific button bar -->
@@ -14,6 +19,7 @@
                 Padding="4">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="2">
                 <Button Command="{Binding AddRecordCommand}" Content="Nowy wpis"/>
+                <Button Command="{Binding EditRecordCommand}" Content="Edytuj"/>
                 <Button Command="{Binding DeleteCommand}" Content="Usuń"/>
             </StackPanel>
         </Border>
@@ -27,7 +33,15 @@
                 <DataGridTextColumn Header="Data" Binding="{Binding Date, StringFormat=\{0:yyyy-MM-dd\}}" />
                 <DataGridTextColumn Header="Kategoria" Binding="{Binding Category.Name}" />
                 <DataGridTextColumn Header="Opis" Binding="{Binding Description}" />
-                <DataGridTextColumn Header="Kwota" Binding="{Binding Amount, StringFormat=\{0:N\}}" />
+                <DataGridTemplateColumn Header="Kwota">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="models:FinancialRecord">
+                            <TextBlock Text="{Binding Amount, StringFormat=\{0:N\}}"
+                                       Foreground="{Binding Category.IsIncome, Converter={StaticResource IsIncomeToColor}}"
+                                       VerticalAlignment="Center" Padding="12,0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Waluta" Binding="{Binding Currency}" />
                 <DataGridTextColumn Header="Kurs" Binding="{Binding CurrencyRate, StringFormat=\{0:N\}}"/>
             </DataGrid.Columns>

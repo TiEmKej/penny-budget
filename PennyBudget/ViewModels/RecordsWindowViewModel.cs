@@ -19,6 +19,7 @@ public partial class RecordsWindowViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+    [NotifyCanExecuteChangedFor(nameof(EditRecordCommand))]
     private FinancialRecord? _selectedRecord;
 
     public RecordsWindowViewModel() => Load();
@@ -36,12 +37,12 @@ public partial class RecordsWindowViewModel : ViewModelBase
         var mainWindow = (Application.Current?.ApplicationLifetime
             as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 
-        var dialog = new AddRecordView { DataContext = new AddRecordViewModel() };
+        var dialog = new RecordFormView { DataContext = new RecordFormViewModel() };
         var result = await dialog.ShowDialog<bool?>(mainWindow!);
 
         if (result == true)
         {
-            var vm = (AddRecordViewModel)dialog.DataContext;
+            var vm = (RecordFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
             await db.FinancialRecords.AddAsync(vm.Record);
             await db.SaveChangesAsync();
@@ -49,13 +50,31 @@ public partial class RecordsWindowViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand(CanExecute = nameof(CanDelete))]
+    [RelayCommand(CanExecute = nameof(CanEditOrDelete))]
+    private async Task EditRecord()
+    {
+        if (SelectedRecord is null) return;
+
+        var mainWindow = (Application.Current?.ApplicationLifetime
+            as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+
+        var dialog = new RecordFormView { DataContext = new RecordFormViewModel(SelectedRecord) };
+        var result = await dialog.ShowDialog<bool?>(mainWindow!);
+
+        if (result == true)
+        {
+            var vm = (RecordFormViewModel)dialog.DataContext;
+            await using var db = new AppDbContext();
+            db.Entry(vm.Record).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            Load();
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanEditOrDelete))]
     private async Task Delete()
     {
-        if (SelectedRecord is null)
-        {
-            return;
-        }
+        if (SelectedRecord is null) return;
 
         await using var db = new AppDbContext();
         db.FinancialRecords.Remove(SelectedRecord);
@@ -63,5 +82,5 @@ public partial class RecordsWindowViewModel : ViewModelBase
         Load();
     }
 
-    private bool CanDelete() => SelectedRecord is not null;
+    private bool CanEditOrDelete() => SelectedRecord is not null;
 }

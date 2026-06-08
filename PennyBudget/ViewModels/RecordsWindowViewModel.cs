@@ -20,18 +20,18 @@ public partial class RecordsWindowViewModel : ViewModelBase
     private List<FinancialRecord> _allRecords = [];
 
     [ObservableProperty]
-    private ObservableCollection<FinancialRecord> _records = [];
+    public partial ObservableCollection<FinancialRecord> Records { get; set; } = [];
 
     [ObservableProperty]
-    private ObservableCollection<CategorySummary> _categorySummaries = [];
+    public partial ObservableCollection<CategorySummary> CategorySummaries { get; set; } = [];
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
     [NotifyCanExecuteChangedFor(nameof(EditRecordCommand))]
-    private FinancialRecord? _selectedRecord;
+    public partial FinancialRecord? SelectedRecord { get; set; }
 
     [ObservableProperty]
-    private string _searchText = "";
+    public partial string SearchText { get; set; } = "";
 
     partial void OnSearchTextChanged(string value) => ApplyFilter();
 

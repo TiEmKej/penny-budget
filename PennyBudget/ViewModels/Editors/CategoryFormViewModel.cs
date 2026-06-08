@@ -6,8 +6,11 @@ namespace PennyBudget.ViewModels.Editors;
 
 public partial class CategoryFormViewModel : ViewModelBase
 {
-    [ObservableProperty] private RecordCategory _record = new();
-    [ObservableProperty] private Color _selectedColor = Colors.Black;
+    [ObservableProperty]
+    public partial RecordCategory Record { get; set; } = new();
+
+    [ObservableProperty]
+    public partial Color SelectedColor { get; set; } = Colors.Black;
 
     public string Title => Record.Id == 0 ? "Add Category" : "Edit Category";
 

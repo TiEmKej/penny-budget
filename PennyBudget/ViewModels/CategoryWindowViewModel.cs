@@ -16,12 +16,12 @@ namespace PennyBudget.ViewModels;
 public partial class CategoryWindowViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private ObservableCollection<RecordCategory> _records = [];
+    public partial ObservableCollection<RecordCategory> Records { get; set; } = [];
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
     [NotifyCanExecuteChangedFor(nameof(EditCategoryCommand))]
-    private RecordCategory? _selectedRecord;
+    public partial RecordCategory? SelectedRecord { get; set; }
 
     public CategoryWindowViewModel() => Load();
 

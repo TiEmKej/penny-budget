@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace PennyBudget.Models;
 
@@ -11,7 +10,7 @@ public class FinancialRecord
     public RecordCategory Category { get; set; } = null!;
     public string Description { get; set; } = string.Empty;
     public decimal Amount { get; set; }
-    [NotMapped] public decimal AmountInYourCurrency { get => Amount * CurrencyRate; set; }
+    [NotMapped] public decimal AmountInYourCurrency => Amount * CurrencyRate;
     public string Currency { get; set; } = "PLN";
     public decimal CurrencyRate { get; set; } = 1.0m;
     public DateTime Date { get; set; } = DateTime.Now;

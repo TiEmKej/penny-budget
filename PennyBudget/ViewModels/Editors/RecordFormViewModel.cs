@@ -9,10 +9,14 @@ namespace PennyBudget.ViewModels.Editors;
 
 public partial class RecordFormViewModel : ViewModelBase
 {
-    [ObservableProperty] private FinancialRecord _record = new();
-    [ObservableProperty] private ObservableCollection<RecordCategory> _categories = [];
-    [ObservableProperty] private RecordCategory? _selectedCategory;
-    [ObservableProperty] private DateTimeOffset? _recordDate = DateTimeOffset.Now;
+    [ObservableProperty]
+    public partial FinancialRecord Record { get; set; } = new();
+    [ObservableProperty]
+    public partial ObservableCollection<RecordCategory> Categories { get; set; } = [];
+    [ObservableProperty]
+    public partial RecordCategory? SelectedCategory { get; set; }
+    [ObservableProperty]
+    public partial DateTimeOffset? RecordDate { get; set; } = DateTimeOffset.Now;
 
     public string Title => Record.Id == 0 ? "Add Record" : "Edit Record";
 
@@ -30,7 +34,7 @@ public partial class RecordFormViewModel : ViewModelBase
         using var db = new AppDbContext();
         Categories = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());
         if (Record.CategoryId != 0)
-            SelectedCategory = Enumerable.FirstOrDefault<RecordCategory>(Categories, c => c.Id == Record.CategoryId);
+            SelectedCategory = Categories.FirstOrDefault(c => c.Id == Record.CategoryId);
     }
 
     partial void OnRecordDateChanged(DateTimeOffset? value)

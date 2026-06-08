@@ -40,7 +40,7 @@
                 BorderThickness="0,0,0,1"
                 Padding="8,6">
             <TextBox Text="{Binding SearchText}"
-                     Watermark="Szukaj (opis, kategoria, waluta)..."
+                     PlaceholderText="Szukaj (opis, kategoria, waluta)..."
                      Width="300"
                      HorizontalAlignment="Left"/>
         </Border>

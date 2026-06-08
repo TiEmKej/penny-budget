@@ -2,7 +2,7 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PennyBudget.Models;
 
-namespace PennyBudget.ViewModels;
+namespace PennyBudget.ViewModels.Editors;
 
 public partial class CategoryFormViewModel : ViewModelBase
 {

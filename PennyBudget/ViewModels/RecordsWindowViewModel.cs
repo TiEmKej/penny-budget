@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,21 +17,58 @@ namespace PennyBudget.ViewModels;
 
 public partial class RecordsWindowViewModel : ViewModelBase
 {
+    private List<FinancialRecord> _allRecords = [];
+
     [ObservableProperty]
     private ObservableCollection<FinancialRecord> _records = [];
+
+    [ObservableProperty]
+    private ObservableCollection<CategorySummary> _categorySummaries = [];
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
     [NotifyCanExecuteChangedFor(nameof(EditRecordCommand))]
     private FinancialRecord? _selectedRecord;
 
+    [ObservableProperty]
+    private string _searchText = "";
+
+    partial void OnSearchTextChanged(string value) => ApplyFilter();
+
     public RecordsWindowViewModel() => Load();
 
     private void Load()
     {
         using var db = new AppDbContext();
-        Records = new ObservableCollection<FinancialRecord>(
-            db.FinancialRecords.Include(r => r.Category).ToList());
+        _allRecords = db.FinancialRecords.Include(r => r.Category).OrderByDescending(r => r.Date).ToList();
+        ApplyFilter();
+        RefreshCategorySummaries();
+    }
+
+    private void ApplyFilter()
+    {
+        var term = SearchText.Trim();
+        var filtered = string.IsNullOrEmpty(term)
+            ? _allRecords
+            : _allRecords.Where(r =>
+                r.Description.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                r.Category.Name.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                r.Currency.Contains(term, StringComparison.OrdinalIgnoreCase));
+        Records = new ObservableCollection<FinancialRecord>(filtered);
+    }
+
+    private void RefreshCategorySummaries()
+    {
+        CategorySummaries = new ObservableCollection<CategorySummary>(
+            _allRecords
+                .GroupBy(r => r.Category)
+                .Select(g => new CategorySummary
+                {
+                    CategoryName = g.Key.Name,
+                    IsIncome = g.Key.IsIncome,
+                    TotalAmountInPln = g.Sum(r => r.AmountInYourCurrency)
+                })
+                .OrderBy(s => s.CategoryName));
     }
 
     [RelayCommand]
@@ -38,12 +77,12 @@ public partial class RecordsWindowViewModel : ViewModelBase
         var mainWindow = (Application.Current?.ApplicationLifetime
             as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 
-        var dialog = new RecordFormView { DataContext = new RecordFormViewModel() };
+        var dialog = new RecordFormView { DataContext = new Editors.RecordFormViewModel() };
         var result = await dialog.ShowDialog<bool?>(mainWindow!);
 
         if (result == true)
         {
-            var vm = (RecordFormViewModel)dialog.DataContext;
+            var vm = (Editors.RecordFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
             await db.FinancialRecords.AddAsync(vm.Record);
             await db.SaveChangesAsync();
@@ -59,12 +98,12 @@ public partial class RecordsWindowViewModel : ViewModelBase
         var mainWindow = (Application.Current?.ApplicationLifetime
             as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 
-        var dialog = new RecordFormView { DataContext = new RecordFormViewModel(SelectedRecord) };
+        var dialog = new RecordFormView { DataContext = new Editors.RecordFormViewModel(SelectedRecord) };
         var result = await dialog.ShowDialog<bool?>(mainWindow!);
 
         if (result == true)
         {
-            var vm = (RecordFormViewModel)dialog.DataContext;
+            var vm = (Editors.RecordFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
             db.Entry(vm.Record).State = EntityState.Modified;
             await db.SaveChangesAsync();

@@ -37,12 +37,12 @@ public partial class CategoryWindowViewModel : ViewModelBase
         var mainWindow = (Application.Current?.ApplicationLifetime
             as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 
-        var dialog = new CategoryFormView { DataContext = new CategoryFormViewModel() };
+        var dialog = new CategoryFormView { DataContext = new Editors.CategoryFormViewModel() };
         var result = await dialog.ShowDialog<bool?>(mainWindow!);
 
         if (result == true)
         {
-            var vm = (CategoryFormViewModel)dialog.DataContext;
+            var vm = (Editors.CategoryFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
             await db.RecordCategory.AddAsync(vm.Record);
             await db.SaveChangesAsync();
@@ -58,12 +58,12 @@ public partial class CategoryWindowViewModel : ViewModelBase
         var mainWindow = (Application.Current?.ApplicationLifetime
             as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 
-        var dialog = new CategoryFormView { DataContext = new CategoryFormViewModel(SelectedRecord) };
+        var dialog = new CategoryFormView { DataContext = new Editors.CategoryFormViewModel(SelectedRecord) };
         var result = await dialog.ShowDialog<bool?>(mainWindow!);
 
         if (result == true)
         {
-            var vm = (CategoryFormViewModel)dialog.DataContext;
+            var vm = (Editors.CategoryFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
             db.Entry(vm.Record).State = EntityState.Modified;
             await db.SaveChangesAsync();

@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using PennyBudget.Data;
 using PennyBudget.Models;
 
-namespace PennyBudget.ViewModels;
+namespace PennyBudget.ViewModels.Editors;
 
 public partial class RecordFormViewModel : ViewModelBase
 {
@@ -30,7 +30,7 @@ public partial class RecordFormViewModel : ViewModelBase
         using var db = new AppDbContext();
         Categories = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());
         if (Record.CategoryId != 0)
-            SelectedCategory = Categories.FirstOrDefault(c => c.Id == Record.CategoryId);
+            SelectedCategory = Enumerable.FirstOrDefault<RecordCategory>(Categories, c => c.Id == Record.CategoryId);
     }
 
     partial void OnRecordDateChanged(DateTimeOffset? value)

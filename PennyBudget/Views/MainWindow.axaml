@@ -9,13 +9,15 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="PennyBudget"
-        Width="1280" Height="720">
+        Width="1280" Height="720"
+        Padding="0"
+        Margin="0">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     
-    <TabControl TabStripPlacement="Top">
+    <TabControl TabStripPlacement="Top" Padding="0">
 
         <TabItem Header="Dashboard">
             <tabs:DashboardUserControl DataContext="{Binding Dashboard}"/>

@@ -3,8 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:PennyBudget.ViewModels"
+        xmlns:editors="clr-namespace:PennyBudget.ViewModels.Editors"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:DataType="vm:CategoryFormViewModel"
+        x:DataType="editors:CategoryFormViewModel"
         x:Class="PennyBudget.Views.EditorForms.CategoryFormView"
         Title="{Binding Title}"
         Width="500" SizeToContent="Height">

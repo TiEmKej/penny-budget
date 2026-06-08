@@ -4,26 +4,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:PennyBudget.ViewModels"
         xmlns:models="clr-namespace:PennyBudget.Models"
+        xmlns:editors="clr-namespace:PennyBudget.ViewModels.Editors"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:DataType="vm:RecordFormViewModel"
+        x:DataType="editors:RecordFormViewModel"
         x:Class="PennyBudget.Views.EditorForms.RecordFormView"
         Title="{Binding Title}"
         Width="500" SizeToContent="Height">
 
         <StackPanel Margin="16" Spacing="8">
 
-                <Grid ColumnDefinitions="150,*" RowDefinitions="*,*,*,*">
+                <Grid ColumnDefinitions="150,*" RowDefinitions="*,*,*,*,*,*">
                         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record description</Label>
                         <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Description" Text="{Binding Record.Description}" HorizontalAlignment="Stretch"/>
 
                         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record amount</Label>
                         <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Record.Amount}" HorizontalAlignment="Stretch"/>
+                        
+                        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record Currency</Label>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Record.Currency}" HorizontalAlignment="Stretch"/>
+                        
+                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record Currency Rate</Label>
+                        <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Record.CurrencyRate}" HorizontalAlignment="Stretch"/>
 
-                        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record date</Label>
-                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RecordDate}" HorizontalAlignment="Stretch"/>
+                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record date</Label>
+                        <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding RecordDate}" HorizontalAlignment="Stretch"/>
 
-                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Name</Label>
-                        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Categories}"
+                        <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Name</Label>
+                        <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Categories}"
                                   SelectedItem="{Binding SelectedCategory}"
                                   HorizontalAlignment="Stretch">
                                 <ComboBox.ItemTemplate>

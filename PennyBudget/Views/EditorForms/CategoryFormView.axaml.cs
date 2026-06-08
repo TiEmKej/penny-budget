@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace PennyBudget.Views;
+namespace PennyBudget.Views.EditorForms;
 
 public partial class CategoryFormView : Window
 {

@@ -6,7 +6,7 @@
         xmlns:models="clr-namespace:PennyBudget.Models"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:DataType="vm:RecordFormViewModel"
-        x:Class="PennyBudget.Views.RecordFormView"
+        x:Class="PennyBudget.Views.EditorForms.RecordFormView"
         Title="{Binding Title}"
         Width="500" SizeToContent="Height">
 

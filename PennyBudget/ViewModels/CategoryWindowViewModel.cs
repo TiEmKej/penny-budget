@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PennyBudget.Data;
 using PennyBudget.Models;
 using PennyBudget.Views;
+using CategoryFormView = PennyBudget.Views.EditorForms.CategoryFormView;
 
 namespace PennyBudget.ViewModels;
 

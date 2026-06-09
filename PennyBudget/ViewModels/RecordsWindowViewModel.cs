@@ -35,12 +35,12 @@ public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
 
     partial void OnSearchTextChanged(string value) => ApplyFilter();
 
-    public RecordsWindowViewModel() => Load();
+    public RecordsWindowViewModel() => _ = Load();
 
-    public void Load()
+    public async Task Load()
     {
-        using var db = new AppDbContext();
-        _allRecords = db.FinancialRecords.Include(r => r.Category).OrderByDescending(r => r.Date).ToList();
+        await using var db = new AppDbContext();
+        _allRecords = await db.FinancialRecords.Include(r => r.Category).OrderByDescending(r => r.Date).ToListAsync();
         ApplyFilter();
         RefreshCategorySummaries();
     }
@@ -86,7 +86,7 @@ public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
             await using var db = new AppDbContext();
             await db.FinancialRecords.AddAsync(vm.Record);
             await db.SaveChangesAsync();
-            Load();
+            await Load();
         }
     }
 
@@ -107,7 +107,7 @@ public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
             await using var db = new AppDbContext();
             db.Entry(vm.Record).State = EntityState.Modified;
             await db.SaveChangesAsync();
-            Load();
+            await Load();
         }
     }
 
@@ -119,7 +119,7 @@ public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
         await using var db = new AppDbContext();
         db.FinancialRecords.Remove(SelectedRecord);
         await db.SaveChangesAsync();
-        Load();
+        await Load();
     }
 
     private bool CanEditOrDelete() => SelectedRecord is not null;

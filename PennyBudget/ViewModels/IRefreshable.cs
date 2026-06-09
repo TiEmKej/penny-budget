@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
+
 namespace PennyBudget.ViewModels;
 
 public interface IRefreshable
 {
-    void Load();
+    Task Load();
 }

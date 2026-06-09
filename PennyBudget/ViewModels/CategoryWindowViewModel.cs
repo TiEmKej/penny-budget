@@ -23,12 +23,13 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
     [NotifyCanExecuteChangedFor(nameof(EditCategoryCommand))]
     public partial RecordCategory? SelectedRecord { get; set; }
 
-    public CategoryWindowViewModel() => Load();
+    public CategoryWindowViewModel() => _ = Load();
 
-    public void Load()
+    public async Task Load()
     {
-        using var db = new AppDbContext();
-        Records = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());
+        await using var db = new AppDbContext();
+        var records = await db.RecordCategory.ToListAsync();
+        Records = new ObservableCollection<RecordCategory>(records);
     }
 
     [RelayCommand]
@@ -46,7 +47,7 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
             await using var db = new AppDbContext();
             await db.RecordCategory.AddAsync(vm.Record);
             await db.SaveChangesAsync();
-            Load();
+            await Load();
         }
     }
 
@@ -67,7 +68,7 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
             await using var db = new AppDbContext();
             db.Entry(vm.Record).State = EntityState.Modified;
             await db.SaveChangesAsync();
-            Load();
+            await Load();
         }
     }
 
@@ -79,7 +80,7 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
         await using var db = new AppDbContext();
         db.RecordCategory.Remove(SelectedRecord);
         await db.SaveChangesAsync();
-        Load();
+        await Load();
     }
 
     private bool CanEditOrDelete() => SelectedRecord is not null;

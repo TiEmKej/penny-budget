@@ -20,10 +20,10 @@ public partial class MainWindow : Window
             tabControl.SelectionChanged += OnTabSelectionChanged;
     }
 
-    private void OnTabSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private async void OnTabSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (sender is not TabControl tabControl) return;
         if (tabControl.SelectedContent is StyledElement { DataContext: IRefreshable vm })
-            vm.Load();
+            await vm.Load();
     }
 }

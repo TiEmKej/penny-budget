@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Microsoft.EntityFrameworkCore;
 using PennyBudget.Data;
 using PennyBudget.ViewModels;
 using PennyBudget.Views;
@@ -20,7 +21,7 @@ public partial class App : Application
         if (!Design.IsDesignMode)
         {
             using var db = new AppDbContext();
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
             DbSeeder.Seed(db);
         }
         

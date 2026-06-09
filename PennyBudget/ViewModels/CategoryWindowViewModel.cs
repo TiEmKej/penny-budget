@@ -13,7 +13,7 @@ using CategoryFormView = PennyBudget.Views.EditorForms.CategoryFormView;
 
 namespace PennyBudget.ViewModels;
 
-public partial class CategoryWindowViewModel : ViewModelBase
+public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
 {
     [ObservableProperty]
     public partial ObservableCollection<RecordCategory> Records { get; set; } = [];
@@ -25,7 +25,7 @@ public partial class CategoryWindowViewModel : ViewModelBase
 
     public CategoryWindowViewModel() => Load();
 
-    private void Load()
+    public void Load()
     {
         using var db = new AppDbContext();
         Records = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());

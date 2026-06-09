@@ -15,7 +15,7 @@ using RecordFormView = PennyBudget.Views.EditorForms.RecordFormView;
 
 namespace PennyBudget.ViewModels;
 
-public partial class RecordsWindowViewModel : ViewModelBase
+public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
 {
     private List<FinancialRecord> _allRecords = [];
 
@@ -37,7 +37,7 @@ public partial class RecordsWindowViewModel : ViewModelBase
 
     public RecordsWindowViewModel() => Load();
 
-    private void Load()
+    public void Load()
     {
         using var db = new AppDbContext();
         _allRecords = db.FinancialRecords.Include(r => r.Category).OrderByDescending(r => r.Date).ToList();

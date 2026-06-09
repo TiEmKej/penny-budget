@@ -16,8 +16,10 @@ public partial class MainWindow : Window
     {
         base.OnLoaded(e);
         var tabControl = this.FindControl<TabControl>("MainTabControl");
-        if (tabControl is not null)
-            tabControl.SelectionChanged += OnTabSelectionChanged;
+        if (tabControl is null) return;
+        tabControl.SelectionChanged += OnTabSelectionChanged;
+        if (tabControl.SelectedContent is StyledElement { DataContext: IRefreshable vm })
+            _ = vm.Load();
     }
 
     private async void OnTabSelectionChanged(object? sender, SelectionChangedEventArgs e)

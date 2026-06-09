@@ -5,7 +5,7 @@ namespace PennyBudget.Data;
 
 public static class DbSeeder
 {
-    public const string IncomeCategoryName = "Income";
+    private const string IncomeCategoryName = "Income";
 
     public static void Seed(AppDbContext db)
     {

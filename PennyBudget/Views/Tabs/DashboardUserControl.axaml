@@ -3,6 +3,65 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="PennyBudget.Views.Tabs.DashboardUserControl">
-    Welcome to Avalonia!
+             xmlns:vm="using:PennyBudget.ViewModels"
+             x:Class="PennyBudget.Views.Tabs.DashboardUserControl"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:converters="clr-namespace:PennyBudget.Converters"
+             x:DataType="vm:DashboardWindowViewModel">
+    <UserControl.Resources>
+        <converters:IsIncomeToColorConverter x:Key="IsIncomeToColor"/>
+    </UserControl.Resources>
+    
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+            </Grid.RowDefinitions>
+            
+            <Panel Grid.Column="0"
+                   Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+                   HorizontalAlignment="Stretch"
+                   Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <Panel Background="LawnGreen" Width="5"/>
+                    <StackPanel>
+                        <Label FontSize="18">Przychody</Label>
+                        <Label Content="{Binding IncomeSum, StringFormat=\{0:0.00\}}"></Label>
+                    </StackPanel>
+                </StackPanel>
+            </Panel>
+            
+            <Panel Grid.Column="1"
+                   Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+                   HorizontalAlignment="Stretch"
+                   Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <Panel Background="Red" Width="5"/>
+                    <StackPanel>
+                        <Label FontSize="18">Wydatki</Label>
+                        <Label Content="{Binding ExpenseSum, StringFormat=\{0:0.00\}}"></Label>
+                    </StackPanel>
+                </StackPanel>
+            </Panel>
+            
+            <Panel Grid.Column="2"
+                   Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+                   HorizontalAlignment="Stretch"
+                   Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <Panel Background="{Binding IsInDebt, Converter={StaticResource IsIncomeToColor}}" Width="5"/>
+                    <StackPanel>
+                        <Label FontSize="18">Bilans</Label>
+                        <Label Content="{Binding Balance, StringFormat=\{0:0.00\}}"></Label>
+                    </StackPanel>
+                </StackPanel>
+            </Panel>
+        </Grid>
+    </StackPanel>
 </UserControl>

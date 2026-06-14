@@ -8,7 +8,9 @@ namespace PennyBudget.Data;
 public class AppDbContext : DbContext
 {
     public DbSet<FinancialRecord> FinancialRecords => Set<FinancialRecord>();
-    public DbSet<RecordCategory> RecordCategory => Set<RecordCategory>();
+    public DbSet<RecordCategory> RecordCategories => Set<RecordCategory>();
+    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Budget> Budgets => Set<Budget>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
@@ -25,13 +27,33 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<FinancialRecord>()
             .Property(r => r.Currency)
             .HasDefaultValue("PLN");
-        
+
         modelBuilder.Entity<FinancialRecord>()
             .Property(r => r.CurrencyRate)
             .HasDefaultValue(1.0m);
-        
+
         modelBuilder.Entity<FinancialRecord>()
             .Property(r => r.Date)
             .HasDefaultValueSql("date('now')");
+
+        modelBuilder.Entity<FinancialRecord>()
+            .HasOne(r => r.Account)
+            .WithMany(a => a.Records)
+            .HasForeignKey(r => r.AccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Account>()
+            .Property(a => a.Currency)
+            .HasDefaultValue("PLN");
+
+        modelBuilder.Entity<Budget>()
+            .Property(b => b.Currency)
+            .HasDefaultValue("PLN");
+
+        modelBuilder.Entity<Budget>()
+            .HasOne(b => b.Category)
+            .WithMany()
+            .HasForeignKey(b => b.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

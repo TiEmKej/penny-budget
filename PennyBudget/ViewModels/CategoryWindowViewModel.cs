@@ -28,7 +28,7 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
     public async Task Load()
     {
         await using var db = new AppDbContext();
-        var records = await db.RecordCategory.ToListAsync();
+        var records = await db.RecordCategories.ToListAsync();
         Records = new ObservableCollection<RecordCategory>(records);
     }
 
@@ -45,7 +45,7 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
         {
             var vm = (Editors.CategoryFormViewModel)dialog.DataContext;
             await using var db = new AppDbContext();
-            await db.RecordCategory.AddAsync(vm.Record);
+            await db.RecordCategories.AddAsync(vm.Record);
             await db.SaveChangesAsync();
             await Load();
         }
@@ -78,7 +78,7 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
         if (SelectedRecord is null) return;
 
         await using var db = new AppDbContext();
-        db.RecordCategory.Remove(SelectedRecord);
+        db.RecordCategories.Remove(SelectedRecord);
         await db.SaveChangesAsync();
         await Load();
     }

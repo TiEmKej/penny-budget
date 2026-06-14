@@ -16,8 +16,16 @@
                         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record description</Label>
                         <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Description" Text="{Binding Record.Description}" HorizontalAlignment="Stretch"/>
                         
-                        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Is Income</Label>
-                        <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Record.IsCash}" HorizontalAlignment="Left"/>
+                        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Konto</Label>
+                        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Accounts}"
+                                  SelectedItem="{Binding SelectedAccount}"
+                                  HorizontalAlignment="Stretch">
+                                <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Account">
+                                                <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                        </ComboBox>
 
                         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record amount</Label>
                         <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Record.Amount}" HorizontalAlignment="Stretch"/>

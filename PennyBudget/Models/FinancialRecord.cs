@@ -14,5 +14,6 @@ public class FinancialRecord
     [NotMapped] public decimal AmountInYourCurrency => Amount * CurrencyRate;
     public int CategoryId { get; set; }
     public RecordCategory Category { get; set; } = null!;
-    public bool IsCash  { get; set; }
+    public int AccountId { get; set; }
+    public Account Account { get; set; } = null!;
 }

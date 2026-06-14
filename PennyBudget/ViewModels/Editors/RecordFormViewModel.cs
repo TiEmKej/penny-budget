@@ -16,25 +16,33 @@ public partial class RecordFormViewModel : ViewModelBase
     [ObservableProperty]
     public partial RecordCategory? SelectedCategory { get; set; }
     [ObservableProperty]
+    public partial ObservableCollection<Account> Accounts { get; set; } = [];
+    [ObservableProperty]
+    public partial Account? SelectedAccount { get; set; }
+    [ObservableProperty]
     public partial DateTimeOffset? RecordDate { get; set; } = DateTimeOffset.Now;
 
     public string Title => Record.Id == 0 ? "Add Record" : "Edit Record";
 
-    public RecordFormViewModel() => LoadCategories();
+    public RecordFormViewModel() => LoadData();
 
     public RecordFormViewModel(FinancialRecord record)
     {
         Record = record;
         RecordDate = new DateTimeOffset(record.Date);
-        LoadCategories();
+        LoadData();
     }
 
-    private void LoadCategories()
+    private void LoadData()
     {
         using var db = new AppDbContext();
-        Categories = new ObservableCollection<RecordCategory>(db.RecordCategory.ToList());
+        Categories = new ObservableCollection<RecordCategory>(db.RecordCategories.ToList());
         if (Record.CategoryId != 0)
             SelectedCategory = Categories.FirstOrDefault(c => c.Id == Record.CategoryId);
+
+        Accounts = new ObservableCollection<Account>(db.Accounts.ToList());
+        if (Record.AccountId != 0)
+            SelectedAccount = Accounts.FirstOrDefault(a => a.Id == Record.AccountId);
     }
 
     partial void OnRecordDateChanged(DateTimeOffset? value)
@@ -47,5 +55,11 @@ public partial class RecordFormViewModel : ViewModelBase
     {
         if (value is not null)
             Record.CategoryId = value.Id;
+    }
+
+    partial void OnSelectedAccountChanged(Account? value)
+    {
+        if (value is not null)
+            Record.AccountId = value.Id;
     }
 }

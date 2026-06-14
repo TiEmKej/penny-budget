@@ -75,7 +75,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridCheckBoxColumn Header="Gotówka" Binding="{Binding IsCash}"/>
+                        <DataGridTextColumn Header="Konto" Binding="{Binding Account.Name}" SortMemberPath="Account.Name"/>
                         <DataGridTextColumn Header="Waluta" Binding="{Binding Currency}" SortMemberPath="Currency" />
                         <DataGridTextColumn Header="Kurs" Binding="{Binding CurrencyRate, StringFormat=\{0:N\}}" SortMemberPath="CurrencyRate"/>
                         <DataGridTemplateColumn Header="PLN" SortMemberPath="AmountInYourCurrency">

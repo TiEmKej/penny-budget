@@ -9,12 +9,12 @@ public static class DbSeeder
 
     public static void Seed(AppDbContext db)
     {
-        if (db.RecordCategory.Any(c => c.Name == IncomeCategoryName))
+        if (db.RecordCategories.Any(c => c.Name == IncomeCategoryName))
         {
             return;
         }
         
-        db.RecordCategory.Add(new RecordCategory { Name = IncomeCategoryName, ColorHex = "#00E009", IsIncome = true});
+        db.RecordCategories.Add(new RecordCategory { Name = IncomeCategoryName, ColorHex = "#00E009", IsIncome = true});
         db.SaveChanges();
     }
 }

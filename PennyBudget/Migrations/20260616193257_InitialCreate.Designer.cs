@@ -11,8 +11,8 @@ using PennyBudget.Data;
 namespace PennyBudget.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260614201943_AddAccountAndBudget")]
-    partial class AddAccountAndBudget
+    [Migration("20260616193257_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,20 +127,21 @@ namespace PennyBudget.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ColorHex")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsIncome")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsSystem")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("RecordCategories");
                 });

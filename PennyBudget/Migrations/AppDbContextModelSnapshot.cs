@@ -124,20 +124,21 @@ namespace PennyBudget.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ColorHex")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsIncome")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsSystem")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("RecordCategories");
                 });

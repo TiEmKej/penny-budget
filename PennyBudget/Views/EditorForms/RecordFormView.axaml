@@ -4,6 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:PennyBudget.Models"
         xmlns:editors="clr-namespace:PennyBudget.ViewModels.Editors"
+        xmlns:res="using:PennyBudget.Resources"
+        xmlns:behaviors="using:PennyBudget.Behaviors"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:DataType="editors:RecordFormViewModel"
         x:Class="PennyBudget.Views.EditorForms.RecordFormView"
@@ -11,12 +13,11 @@
         Width="500" SizeToContent="Height">
 
         <StackPanel Margin="16" Spacing="8">
-
                 <Grid ColumnDefinitions="150,*" RowDefinitions="*,*,*,*,*,*,*">
-                        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record description</Label>
-                        <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Description" Text="{Binding Record.Description}" HorizontalAlignment="Stretch"/>
-                        
-                        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Konto</Label>
+                        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblDescription}"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="{x:Static res:Strings.LblDescription}" Text="{Binding Record.Description}" HorizontalAlignment="Stretch"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblAccount}"/>
                         <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Accounts}"
                                   SelectedItem="{Binding SelectedAccount}"
                                   HorizontalAlignment="Stretch">
@@ -27,33 +28,34 @@
                                 </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record amount</Label>
-                        <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Record.Amount}" HorizontalAlignment="Stretch"/>
-                        
-                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record Currency</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Record.Currency}" HorizontalAlignment="Stretch"/>
-                        
-                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record Currency Rate</Label>
-                        <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding Record.CurrencyRate}" HorizontalAlignment="Stretch"/>
+                        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblAmount}"/>
+                        <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Record.Amount}" HorizontalAlignment="Stretch"
+                                       behaviors:DecimalInputBehavior.NormalizeDecimalSeparator="True"/>
 
-                        <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Record date</Label>
+                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblCurrency}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Record.Currency}" HorizontalAlignment="Stretch"/>
+
+                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblRate}"/>
+                        <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding Record.CurrencyRate}" HorizontalAlignment="Stretch"
+                                       behaviors:DecimalInputBehavior.NormalizeDecimalSeparator="True"/>
+
+                        <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblDate}"/>
                         <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding RecordDate}" HorizontalAlignment="Stretch"/>
 
-                        <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Name</Label>
+                        <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.ColCategory}"/>
                         <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Categories}"
                                   SelectedItem="{Binding SelectedCategory}"
                                   HorizontalAlignment="Stretch">
                                 <ComboBox.ItemTemplate>
                                         <DataTemplate x:DataType="models:RecordCategory">
-                                                <TextBlock Text="{Binding Name}"/>
+                                                <TextBlock Text="{Binding DisplayName}"/>
                                         </DataTemplate>
                                 </ComboBox.ItemTemplate>
                         </ComboBox>
                 </Grid>
                 <Grid ColumnDefinitions="*,*">
-                        <Button Grid.Column="0" Content="Save"   Click="OnSave" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-                        <Button Grid.Column="1" Content="Cancel" Click="OnCancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                        <Button Grid.Column="0" Content="{x:Static res:Strings.BtnSave}"   Click="OnSave"   HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                        <Button Grid.Column="1" Content="{x:Static res:Strings.BtnCancel}" Click="OnCancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
                 </Grid>
-
         </StackPanel>
 </Window>

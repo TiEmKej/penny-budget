@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Tabs -->
+  <data name="tab_dashboard"   xml:space="preserve"><value>Dashboard</value></data>
+  <data name="tab_records"     xml:space="preserve"><value>Records</value></data>
+  <data name="tab_categories"  xml:space="preserve"><value>Categories</value></data>
+  <data name="tab_settings"    xml:space="preserve"><value>Settings</value></data>
+
+  <!-- Dashboard -->
+  <data name="dashboard_income"   xml:space="preserve"><value>Income</value></data>
+  <data name="dashboard_expenses" xml:space="preserve"><value>Expenses</value></data>
+  <data name="dashboard_balance"  xml:space="preserve"><value>Balance</value></data>
+
+  <!-- Column headers -->
+  <data name="col_date"        xml:space="preserve"><value>Date</value></data>
+  <data name="col_category"    xml:space="preserve"><value>Category</value></data>
+  <data name="col_description" xml:space="preserve"><value>Description</value></data>
+  <data name="col_amount"      xml:space="preserve"><value>Amount</value></data>
+  <data name="col_account"     xml:space="preserve"><value>Account</value></data>
+  <data name="col_currency"    xml:space="preserve"><value>Currency</value></data>
+  <data name="col_rate"        xml:space="preserve"><value>Rate</value></data>
+  <data name="col_pln"         xml:space="preserve"><value>PLN</value></data>
+  <data name="col_name"        xml:space="preserve"><value>Name</value></data>
+  <data name="col_color"       xml:space="preserve"><value>Color</value></data>
+  <data name="col_income"      xml:space="preserve"><value>Income</value></data>
+  <data name="col_system"      xml:space="preserve"><value>System</value></data>
+
+  <!-- Buttons / tooltips -->
+  <data name="btn_add"    xml:space="preserve"><value>Add</value></data>
+  <data name="btn_edit"   xml:space="preserve"><value>Edit</value></data>
+  <data name="btn_delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="btn_save"   xml:space="preserve"><value>Save</value></data>
+  <data name="btn_cancel" xml:space="preserve"><value>Cancel</value></data>
+
+  <!-- Search -->
+  <data name="search_placeholder" xml:space="preserve"><value>Search (description, category, currency)...</value></data>
+
+  <!-- Form labels -->
+  <data name="lbl_category_name"         xml:space="preserve"><value>Category Name</value></data>
+  <data name="lbl_category_name_ph"      xml:space="preserve"><value>Name</value></data>
+  <data name="lbl_is_income"             xml:space="preserve"><value>Is Income</value></data>
+  <data name="lbl_category_color"        xml:space="preserve"><value>Category Color</value></data>
+  <data name="lbl_description"           xml:space="preserve"><value>Description</value></data>
+  <data name="lbl_account"               xml:space="preserve"><value>Account</value></data>
+  <data name="lbl_amount"                xml:space="preserve"><value>Amount</value></data>
+  <data name="lbl_currency"              xml:space="preserve"><value>Currency</value></data>
+  <data name="lbl_rate"                  xml:space="preserve"><value>Exchange Rate</value></data>
+  <data name="lbl_date"                  xml:space="preserve"><value>Date</value></data>
+
+  <!-- Settings -->
+  <data name="lbl_settings_language" xml:space="preserve"><value>Language</value></data>
+  <data name="lbl_settings_restart"  xml:space="preserve"><value>Restart the app to apply the language change.</value></data>
+
+  <!-- Dialog titles -->
+  <data name="title_add_category"  xml:space="preserve"><value>Add Category</value></data>
+  <data name="title_edit_category" xml:space="preserve"><value>Edit Category</value></data>
+  <data name="title_add_record"    xml:space="preserve"><value>Add Record</value></data>
+  <data name="title_edit_record"   xml:space="preserve"><value>Edit Record</value></data>
+</root>

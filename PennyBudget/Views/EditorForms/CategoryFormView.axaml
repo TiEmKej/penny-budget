@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:editors="clr-namespace:PennyBudget.ViewModels.Editors"
+        xmlns:res="using:PennyBudget.Resources"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:DataType="editors:CategoryFormViewModel"
         x:Class="PennyBudget.Views.EditorForms.CategoryFormView"
@@ -11,18 +12,18 @@
 
         <StackPanel Margin="16" Spacing="8">
             <Grid ColumnDefinitions="150,*" RowDefinitions="*,*,*">
-                <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Name</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="Name" Text="{Binding Record.Name}" HorizontalAlignment="Stretch"/>
+                <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblCategoryName}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" PlaceholderText="{x:Static res:Strings.LblCategoryNamePh}" Text="{Binding Record.Name}" HorizontalAlignment="Stretch"/>
 
-                <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Is Income</Label>
+                <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblIsIncome}"/>
                 <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Record.IsIncome}" HorizontalAlignment="Left"/>
 
-                <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Category Color</Label>
+                <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{x:Static res:Strings.LblCategoryColor}"/>
                 <ColorPicker Grid.Row="2" Grid.Column="1" Color="{Binding SelectedColor}" HorizontalAlignment="Left"/>
             </Grid>
             <Grid ColumnDefinitions="*,*">
-                <Button Grid.Column="0" Content="Save"   Click="OnSave" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-                <Button Grid.Column="1" Content="Cancel" Click="OnCancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                <Button Grid.Column="0" Content="{x:Static res:Strings.BtnSave}"   Click="OnSave"   HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                <Button Grid.Column="1" Content="{x:Static res:Strings.BtnCancel}" Click="OnCancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
             </Grid>
         </StackPanel>
 </Window>

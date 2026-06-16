@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="income"        xml:space="preserve"><value>Income</value></data>
+  <data name="salary"        xml:space="preserve"><value>Salary</value></data>
+  <data name="transfer_in"   xml:space="preserve"><value>Transfer In</value></data>
+  <data name="transfer_out"  xml:space="preserve"><value>Transfer Out</value></data>
+  <data name="groceries"     xml:space="preserve"><value>Groceries</value></data>
+  <data name="transport"     xml:space="preserve"><value>Transport</value></data>
+  <data name="medical"       xml:space="preserve"><value>Medical</value></data>
+  <data name="entertainment" xml:space="preserve"><value>Entertainment</value></data>
+  <data name="bills"         xml:space="preserve"><value>Bills</value></data>
+  <data name="debt_payments" xml:space="preserve"><value>Debt Payments</value></data>
+</root>

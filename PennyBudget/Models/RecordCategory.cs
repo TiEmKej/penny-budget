@@ -1,14 +1,21 @@
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PennyBudget.Models;
 
-[Index(nameof(Name), IsUnique = true)]
 public class RecordCategory
 {
     public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string ColorHex { get; set; } = "#000000";
+    public bool IsSystem { get; set; }
+    public string? Key { get; set; }
+    public string? Name { get; set; }
+    public string? ColorHex { get; set; }
     public bool IsIncome { get; set; }
     public ICollection<FinancialRecord> Records { get; set; } = [];
+
+    [NotMapped] public string DisplayName =>
+        IsSystem && Key != null ? SystemCategories.GetDisplayName(Key) : (Name ?? "");
+
+    [NotMapped] public string DisplayColorHex =>
+        IsSystem && Key != null ? SystemCategories.GetColorHex(Key) : (ColorHex ?? "#000000");
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tabs="using:PennyBudget.Views.Tabs"
+        xmlns:res="using:PennyBudget.Resources"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="PennyBudget.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -16,21 +17,25 @@
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    
+
     <TabControl x:Name="MainTabControl" TabStripPlacement="Top" Padding="0">
 
-        <TabItem Header="Dashboard">
+        <TabItem Header="{x:Static res:Strings.TabDashboard}">
             <tabs:DashboardUserControl DataContext="{Binding Dashboard}"/>
         </TabItem>
 
-        <TabItem Header="Wpisy">
+        <TabItem Header="{x:Static res:Strings.TabRecords}">
             <tabs:RecordUserControl DataContext="{Binding Records}"/>
         </TabItem>
 
-        <TabItem Header="Kategorie">
+        <TabItem Header="{x:Static res:Strings.TabCategories}">
             <tabs:CategoryUserControl DataContext="{Binding Categories}"/>
         </TabItem>
 
+        <TabItem Header="{x:Static res:Strings.TabSettings}">
+            <tabs:SettingsUserControl DataContext="{Binding Settings}"/>
+        </TabItem>
+
     </TabControl>
-    
+
 </Window>

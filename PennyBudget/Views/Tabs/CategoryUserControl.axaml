@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="using:PennyBudget.ViewModels"
+             xmlns:res="using:PennyBudget.Resources"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:DataType="vm:CategoryWindowViewModel"
              x:Class="PennyBudget.Views.Tabs.CategoryUserControl">
@@ -15,13 +16,13 @@
                 BorderThickness="0,1,0,0"
                 Padding="4">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="2">
-                <Button Command="{Binding AddCategoryCommand}" ToolTip.Tip="Nowy wpis">
+                <Button Command="{Binding AddCategoryCommand}" ToolTip.Tip="{x:Static res:Strings.BtnAdd}">
                     <avalonia:MaterialIcon Kind="Plus" Width="32" Height="32"/>
                 </Button>
-                <Button Command="{Binding EditCategoryCommand}" ToolTip.Tip="Edytuj">
+                <Button Command="{Binding EditCategoryCommand}" ToolTip.Tip="{x:Static res:Strings.BtnEdit}">
                     <avalonia:MaterialIcon Kind="Pencil" Width="32" Height="32"/>
                 </Button>
-                <Button Command="{Binding DeleteCommand}" ToolTip.Tip="Usuń">
+                <Button Command="{Binding DeleteCommand}" ToolTip.Tip="{x:Static res:Strings.BtnDelete}">
                     <avalonia:MaterialIcon Kind="Delete" Width="32" Height="32"/>
                 </Button>
             </StackPanel>
@@ -34,9 +35,10 @@
                       CanUserSortColumns="True"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nazwa"    Binding="{Binding Name}"     SortMemberPath="Name"/>
-                    <DataGridTextColumn Header="Kolor"    Binding="{Binding ColorHex}" SortMemberPath="ColorHex"/>
-                    <DataGridCheckBoxColumn Header="Przychód" Binding="{Binding IsIncome}" SortMemberPath="IsIncome"/>
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColName}"   Binding="{Binding DisplayName}"     SortMemberPath="DisplayName"/>
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColColor}"  Binding="{Binding DisplayColorHex}" SortMemberPath="DisplayColorHex"/>
+                    <DataGridCheckBoxColumn Header="{x:Static res:Strings.ColIncome}" Binding="{Binding IsIncome}"    SortMemberPath="IsIncome"/>
+                    <DataGridCheckBoxColumn Header="{x:Static res:Strings.ColSystem}" Binding="{Binding IsSystem}"    SortMemberPath="IsSystem"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

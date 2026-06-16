@@ -4,6 +4,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PennyBudget.Data;
 using PennyBudget.Models;
+using PennyBudget.Resources;
 
 namespace PennyBudget.ViewModels.Editors;
 
@@ -22,7 +23,7 @@ public partial class RecordFormViewModel : ViewModelBase
     [ObservableProperty]
     public partial DateTimeOffset? RecordDate { get; set; } = DateTimeOffset.Now;
 
-    public string Title => Record.Id == 0 ? "Add Record" : "Edit Record";
+    public string Title => Record.Id == 0 ? Strings.TitleAddRecord : Strings.TitleEditRecord;
 
     public RecordFormViewModel() => LoadData();
 

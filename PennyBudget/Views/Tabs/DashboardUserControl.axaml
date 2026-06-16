@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="using:PennyBudget.ViewModels"
+             xmlns:res="using:PennyBudget.Resources"
              x:Class="PennyBudget.Views.Tabs.DashboardUserControl"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:converters="clr-namespace:PennyBudget.Converters"
@@ -31,7 +32,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Panel Background="LawnGreen" Width="5"/>
                     <StackPanel>
-                        <Label FontSize="18">Przychody</Label>
+                        <Label FontSize="18" Content="{x:Static res:Strings.DashboardIncome}"/>
                         <Label Content="{Binding IncomeSum, StringFormat=\{0:0.00\}}"></Label>
                     </StackPanel>
                 </StackPanel>
@@ -44,7 +45,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Panel Background="Red" Width="5"/>
                     <StackPanel>
-                        <Label FontSize="18">Wydatki</Label>
+                        <Label FontSize="18" Content="{x:Static res:Strings.DashboardExpenses}"/>
                         <Label Content="{Binding ExpenseSum, StringFormat=\{0:0.00\}}"></Label>
                     </StackPanel>
                 </StackPanel>
@@ -57,7 +58,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Panel Background="{Binding IsInDebt, Converter={StaticResource IsIncomeToColor}}" Width="5"/>
                     <StackPanel>
-                        <Label FontSize="18">Bilans</Label>
+                        <Label FontSize="18" Content="{x:Static res:Strings.DashboardBalance}"/>
                         <Label Content="{Binding Balance, StringFormat=\{0:0.00\}}"></Label>
                     </StackPanel>
                 </StackPanel>

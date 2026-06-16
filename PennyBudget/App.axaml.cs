@@ -1,3 +1,4 @@
+using System.Globalization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls;
@@ -18,13 +19,15 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        ApplyCulture();
+
         if (!Design.IsDesignMode)
         {
             using var db = new AppDbContext();
             db.Database.Migrate();
             DbSeeder.Seed(db);
         }
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
@@ -34,5 +37,14 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private static void ApplyCulture()
+    {
+        var language = SettingsManager.Load().Language;
+        if (language is null) return;
+        var culture = new CultureInfo(language);
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
 }

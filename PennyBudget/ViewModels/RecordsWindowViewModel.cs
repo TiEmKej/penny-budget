@@ -51,7 +51,7 @@ public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
             ? _allRecords
             : _allRecords.Where(r =>
                 r.Description.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                r.Category.Name.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                r.Category.DisplayName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
                 r.Currency.Contains(term, StringComparison.OrdinalIgnoreCase));
         Records = new ObservableCollection<FinancialRecord>(filtered);
     }
@@ -63,7 +63,7 @@ public partial class RecordsWindowViewModel : ViewModelBase, IRefreshable
                 .GroupBy(r => r.Category)
                 .Select(g => new CategorySummary
                 {
-                    CategoryName = g.Key.Name,
+                    CategoryName = g.Key.DisplayName,
                     IsIncome = g.Key.IsIncome,
                     TotalAmountInPln = g.Sum(r => r.AmountInYourCurrency)
                 })

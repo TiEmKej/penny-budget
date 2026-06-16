@@ -5,16 +5,21 @@ namespace PennyBudget.Data;
 
 public static class DbSeeder
 {
-    private const string IncomeCategoryName = "Income";
-
     public static void Seed(AppDbContext db)
     {
-        if (db.RecordCategories.Any(c => c.Name == IncomeCategoryName))
-        {
+        if (db.RecordCategories.Any(c => c.IsSystem))
             return;
+
+        foreach (var (key, info) in SystemCategories.All)
+        {
+            db.RecordCategories.Add(new RecordCategory
+            {
+                IsSystem = true,
+                Key = key,
+                IsIncome = info.IsIncome
+            });
         }
-        
-        db.RecordCategories.Add(new RecordCategory { Name = IncomeCategoryName, ColorHex = "#00E009", IsIncome = true});
+
         db.SaveChanges();
     }
 }

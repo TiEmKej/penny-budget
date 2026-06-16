@@ -83,5 +83,5 @@ public partial class CategoryWindowViewModel : ViewModelBase, IRefreshable
         await Load();
     }
 
-    private bool CanEditOrDelete() => SelectedRecord is not null;
+    private bool CanEditOrDelete() => SelectedRecord is { IsSystem: false };
 }

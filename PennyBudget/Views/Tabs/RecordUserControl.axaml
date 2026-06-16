@@ -6,6 +6,7 @@
              xmlns:vm="using:PennyBudget.ViewModels"
              xmlns:models="using:PennyBudget.Models"
              xmlns:converters="using:PennyBudget.Converters"
+             xmlns:res="using:PennyBudget.Resources"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:DataType="vm:RecordsWindowViewModel"
              x:Class="PennyBudget.Views.Tabs.RecordUserControl">
@@ -14,38 +15,35 @@
     </UserControl.Resources>
     <DockPanel Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
 
-        <!-- Tab-specific button bar -->
         <Border DockPanel.Dock="Bottom"
                 Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
                 BorderBrush="{DynamicResource SystemControlForegroundBaseMediumLowBrush}"
                 BorderThickness="0,1,0,0"
                 Padding="4">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="2">
-                <Button Command="{Binding AddRecordCommand}" ToolTip.Tip="Nowy wpis">
+                <Button Command="{Binding AddRecordCommand}" ToolTip.Tip="{x:Static res:Strings.BtnAdd}">
                     <materialIcons:MaterialIcon Kind="Plus" Width="32" Height="32"/>
                 </Button>
-                <Button Command="{Binding EditRecordCommand}" ToolTip.Tip="Edytuj">
+                <Button Command="{Binding EditRecordCommand}" ToolTip.Tip="{x:Static res:Strings.BtnEdit}">
                     <materialIcons:MaterialIcon Kind="Pencil" Width="32" Height="32"/>
                 </Button>
-                <Button Command="{Binding DeleteCommand}" ToolTip.Tip="Usuń">
+                <Button Command="{Binding DeleteCommand}" ToolTip.Tip="{x:Static res:Strings.BtnDelete}">
                     <materialIcons:MaterialIcon Kind="Delete" Width="32" Height="32"/>
                 </Button>
             </StackPanel>
         </Border>
 
-        <!-- Search bar -->
         <Border DockPanel.Dock="Top"
                 Background="{DynamicResource SystemControlBackgroundChromeLowBrush}"
                 BorderBrush="{DynamicResource SystemControlForegroundBaseMediumLowBrush}"
                 BorderThickness="0,0,0,1"
                 Padding="8,6">
             <TextBox Text="{Binding SearchText}"
-                     PlaceholderText="Szukaj (opis, kategoria, waluta)..."
+                     PlaceholderText="{x:Static res:Strings.SearchPlaceholder}"
                      Width="300"
                      HorizontalAlignment="Left"/>
         </Border>
 
-        <!-- Content fills the rest -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" MinWidth="500"/>
@@ -63,10 +61,10 @@
                           CanUserSortColumns="True"
                           IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Data" Binding="{Binding Date, StringFormat=\{0:yyyy-MM-dd\}}" SortMemberPath="Date" />
-                        <DataGridTextColumn Header="Kategoria" Binding="{Binding Category.Name}" SortMemberPath="Category.Name" />
-                        <DataGridTextColumn Header="Opis" Binding="{Binding Description}" SortMemberPath="Description" />
-                        <DataGridTemplateColumn Header="Kwota" SortMemberPath="Amount">
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColDate}"        Binding="{Binding Date, StringFormat=\{0:yyyy-MM-dd\}}"          SortMemberPath="Date"/>
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColCategory}"    Binding="{Binding Category.DisplayName}"                          SortMemberPath="Category.DisplayName"/>
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColDescription}" Binding="{Binding Description}"                                   SortMemberPath="Description"/>
+                        <DataGridTemplateColumn Header="{x:Static res:Strings.ColAmount}"  SortMemberPath="Amount">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate x:DataType="models:FinancialRecord">
                                     <TextBlock Text="{Binding Amount, StringFormat=\{0:0.00\}}"
@@ -75,10 +73,10 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Konto" Binding="{Binding Account.Name}" SortMemberPath="Account.Name"/>
-                        <DataGridTextColumn Header="Waluta" Binding="{Binding Currency}" SortMemberPath="Currency" />
-                        <DataGridTextColumn Header="Kurs" Binding="{Binding CurrencyRate, StringFormat=\{0:N\}}" SortMemberPath="CurrencyRate"/>
-                        <DataGridTemplateColumn Header="PLN" SortMemberPath="AmountInYourCurrency">
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColAccount}"  Binding="{Binding Account.Name}"                                     SortMemberPath="Account.Name"/>
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColCurrency}" Binding="{Binding Currency}"                                         SortMemberPath="Currency"/>
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColRate}"     Binding="{Binding CurrencyRate, StringFormat=\{0:N\}}"               SortMemberPath="CurrencyRate"/>
+                        <DataGridTemplateColumn Header="{x:Static res:Strings.ColPln}"  SortMemberPath="AmountInYourCurrency">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate x:DataType="models:FinancialRecord">
                                     <TextBlock Text="{Binding AmountInYourCurrency, StringFormat=\{0:0.00\}}"
@@ -98,8 +96,8 @@
                           CanUserSortColumns="True"
                           IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Kategoria" Binding="{Binding CategoryName}" SortMemberPath="CategoryName" />
-                        <DataGridTemplateColumn Header="PLN" SortMemberPath="TotalAmountInPln">
+                        <DataGridTextColumn Header="{x:Static res:Strings.ColCategory}" Binding="{Binding CategoryName}" SortMemberPath="CategoryName"/>
+                        <DataGridTemplateColumn Header="{x:Static res:Strings.ColPln}"  SortMemberPath="TotalAmountInPln">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate x:DataType="models:CategorySummary">
                                     <TextBlock Text="{Binding TotalAmountInPln, StringFormat=\{0:0.00\}}"
